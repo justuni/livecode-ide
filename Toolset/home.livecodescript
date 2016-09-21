@@ -1041,9 +1041,17 @@ command revInternal__Log pType, pMessage
    
    repeat for each line tLine in pMessage
       if sLogIndent > 0 then
-         write char 1 to sLogIndent of "                                " to file sLogPath
+         if $TRAVIS then
+		   	write char 1 to sLogIndent of "                                " to stdout
+		else
+         	write char 1 to sLogIndent of "                                " to file sLogPath
+         end if
       end if
-      write tLine & return to file sLogPath
+      if $TRAVIS then
+      write tLine & return to stdout
+      else
+      	write tLine & return to file sLogPath
+      end if
    end repeat
    
    if pType is "Enter" then

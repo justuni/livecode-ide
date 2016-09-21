@@ -20,6 +20,10 @@ along with LiveCode.  If not see <http://www.gnu.org/licenses/>.  */
 constant kLogFilename = "_test_suite.log"
 
 on startup
+	if $TRAVIS then 
+		write "test runner startup called" & return to stdout
+	end if
+
    local tTarget
    if the target begins with "card" then
       put the long id of the owner of the target into tTarget
