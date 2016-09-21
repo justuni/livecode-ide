@@ -746,6 +746,7 @@ private function __extensionIsBuiltin pID
       case "com.livecode.codeunit"
       case "com.livecode.date"
       case "com.livecode.file"
+      case "com.livecode.java"
       case "com.livecode.list"
       case "com.livecode.logic"
       case "com.livecode.mathfoundation"

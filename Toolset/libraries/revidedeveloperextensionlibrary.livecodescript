@@ -536,12 +536,14 @@ on __revIDEDeveloperExtensionDoCreateTestStack pPath, tRectsA, pDetailsA
 end __revIDEDeveloperExtensionDoCreateTestStack
 
 on __revIDEDeveloperExtensionDoClearTestStack
-   repeat while there is a widget 1 of stack "LiveCode Extension Test Window" 
-      delete widget 1 of stack "LiveCode Extension Test Window"
-   end repeat
-   local tExtension
-   put the cCurExtension of stack "LiveCode Extension Test Window" into tExtension
-   delete stack "LiveCode Extension Test Window"
+   if there is a stack "LiveCode Extension Test Window" then
+      repeat while there is a widget 1 of stack "LiveCode Extension Test Window" 
+         delete widget 1 of stack "LiveCode Extension Test Window"
+      end repeat
+      local tExtension
+      put the cCurExtension of stack "LiveCode Extension Test Window" into tExtension
+      delete stack "LiveCode Extension Test Window"
+   end if
    if tExtension is not empty then
       __revIDEDeveloperExtensionUnload tExtension
       __revIDEDeveloperExtensionLog "Unloading..."
