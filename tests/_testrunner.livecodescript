@@ -72,6 +72,23 @@ command TestRunnerImpl_DoInvoke pInfo
    if there is not a stack "home" then
 	   invokeLoadIDE
    end if
+<<<<<<< HEAD
+=======
+	
+   invokeAllTests
+end TestRunnerInvokeAll
+
+private command doRun pInfo
+   if pInfo["args"][2] is empty then
+      doUsage 1
+   end if
+
+   runLoadLibrary pInfo
+   
+   local tAnalysis
+   runAllTests pInfo
+   put the result into tAnalysis
+>>>>>>> ed8cc245b57adf217e789e79bf45c2c267517ea2
    
    if pInfo["invoke"]["script"] is not empty then
       invokeTest pInfo
@@ -113,7 +130,7 @@ private command invokeLoadIDE
 	
 	dispatch "startup" to tStackName	
 	TestAssert "IDE startup without error", the result is empty
-	
+
 	open tStackName
 end invokeLoadIDE
 
