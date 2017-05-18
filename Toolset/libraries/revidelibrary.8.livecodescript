@@ -3260,7 +3260,7 @@ on revIDEDownloadFinished pURL
 end revIDEDownloadFinished
 
 on revIDEActionCreateObject pObjectTypeID
-   revIDECreateObject pObjectTypeID, the topStack, the loc of this card of the topStack
+   revIDECreateObject pObjectTypeID, the topStack
 end revIDEActionCreateObject
 
 private command __setPropertiesToDefaults pObjectID, pPropsInfoA
@@ -3390,6 +3390,10 @@ on revIDECreateObject pObjectTypeID, pTarget, pLoc
    if sClassicObjectProperties is empty then __objectPropertiesRead
    # Set the default stack to the target we're creating the object on
    set the defaultstack to revIDEStackOfObject(pTarget)
+
+   if pLoc is empty then
+      put the loc of this card of the defaultStack into pLoc
+   end if
 
    # Create the object
    lock screen
