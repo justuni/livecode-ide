@@ -1,0 +1,480 @@
+tutorial "FM Plugin"
+
+prologue
+	In this tutorial we will create a simple To Do List that we can build into a standalone application.
+image
+	ToDoListScreenshot.png
+end prologue
+
+step "Tutorial Intro I"
+	In creating this app you will learn:
+
+	- How to build the graphical portion of an app by dragging and dropping objects
+
+	- The basics of coding in LiveCode to add user interactivity to your app
+
+	- How to use the features of the LiveCode Integrated Development Environment (IDE)
+
+	- How to build your app as a standalone application.
+action
+	interlude
+	go to step "Tutorials Intro"
+end step
+
+step "Tutorials Intro"
+	You can keep track of how much of the tutorial you have completed
+	with this progress bar, and exit the tutorial at any time by
+	clicking on the stop button.
+
+	Clicking the fast-forward button will skip to the next important
+	concept being introduced in the tutorial. Use this if you've got the
+	idea about something and don't want to have to create every last
+	part of the user interface, for example.
+action
+	interlude
+	highlight toolbar "tutorial"
+	go to step "Tutorial First Part"
+end step
+
+skip point
+
+step "Tutorial First Part"
+	In this first section of the tutorial, we will create the user
+	interface (UI) for the To Do List app.
+action
+	interlude
+	go to step "Stack Interlude"
+end step
+
+step "Stack Interlude"
+	The first step in creating a LiveCode application is creating a
+	window, which in LiveCode is called a stack. Each window you see in
+	LiveCode is a stack.
+action
+	interlude
+	go to step "Create Mainstack"
+end step
+
+step "Create Mainstack"
+	Click on the File menu, and select 'New Stack' → 'iPhone 5 (320x568)'.
+action
+    highlight menu item "iPhone 5 (320x568)" of menu item "New Stack" of menu "File"
+    capture the next new stack as "Mainstack"
+    capture the next new card of stack "Mainstack" as "ToDoList"
+    wait until there is a stack "Mainstack"
+		go to step "Set Stack Properties"
+end step
+
+step "Set Stack Properties"
+	Click on the Inspector icon on the toolbar to open the property
+	inspector.
+action
+	highlight toolbar "Inspector"
+	wait until there is an inspector for stack "Mainstack"
+	go to step "Property Inspector Interlude"
+end step
+
+skip point
+
+step "Property Inspector Interlude"
+	The Property Inspector is a window that allows you to control the
+	appearance, location and behavior of the objects in your app.
+
+	Properties of objects are grouped into sections. You can hover over
+	the icons at the top of the inspector to see what each section is
+	called.
+action
+	interlude
+	highlight inspector for stack "Mainstack"
+	go to step "Set Stack Title"
+end step
+
+step "Set Stack Title"
+	Set the 'Title' of the stack to "To Do List".
+action
+	highlight property "title" of section "basic"
+	wait until the title of stack "Mainstack" is "To Do List"
+	go to step "Tools Palette Interlude"
+end step
+
+skip point
+
+step "Tools Palette Interlude"
+	This is the tools palette. It contains all the built-in objects that
+	you can drag out onto your stack, such as buttons, text fields and
+	scrollbars. It also contains more complex controls called widgets.
+	These include a header bar, navigation bar, browser and line graph.
+action
+	interlude
+	highlight tools
+	go to step "Create Header Widget"
+end step
+
+step "Create Header Widget"
+	Drag a Header Bar widget from the tools palette onto your stack.
+action
+	highlight tool "Create com.livecode.widget.headerBar"
+	capture the next new widget of stack "Mainstack" as "header"
+	wait until there is a widget "header"
+	go to step "Set Header Location"
+end step
+
+step "Set Header Location"
+	Position the Header Bar, as shown by dragging the resize handle.
+action
+	add guide "headerLoc" with rect "0,0,320,64" to stack "Mainstack"
+	highlight guide "headerLoc"
+	wait until widget "header" fits guide "headerLoc" with tolerance 5
+	go to step "Open Property Inspector"
+end step
+
+step "Open Property Inspector"
+	Click on the toolbar icon to open the property inspector for the
+	header.
+action
+	highlight toolbar "Inspector"
+	wait until there is an inspector for widget "header"
+	go to step "Set header name"
+end step
+
+step "Set header name"
+	The Name property allows us to refer to a control in the code. We want to use short, unique, descriptive names. Set the name property of the header bar to "Header".
+action
+	highlight property "name" of section "Basic"
+	wait until the name of widget "header" is "Header"
+	go to step "Set header title"
+end step
+
+step "Set header title"
+	The Title property of the header bar allows you to set the text that is displayed on the header bar. Set the Title property of the header bar to "Tasks".
+action
+	highlight property "label" of section "Basic"
+	wait until the label of widget "header" is "Tasks"
+	go to step "Set header actions I"
+end step
+
+step "Set header actions I"
+	The Header actions property of the header bar allows you to make actions available to the user from the header bar. In this app we will have add and delete actions.
+
+	Remove the 'Back' item in the 'Header Actions' of the widget by clicking on its delete icon.
+action
+	highlight property "itemArray" of section "Basic"
+	wait until the itemNames of widget "Header" is "add"
+	go to step "Set Header Actions II"
+end step
+
+step "Set Header Actions II"
+	Add a new item by click on the "+" icon after the "Add" action.
+action
+	highlight property "itemArray" of section "Basic"
+	wait until the itemNames of widget "Header" is "add,new item"
+	go to step "Set Header Actions III"
+end step
+
+step "Set Header Actions III"
+	Set the label of the new item to "Delete".
+action
+	highlight property "itemArray" of section "Basic"
+	wait until the itemLabels of widget "Header" is "add,delete"
+	go to step "Set Header Actions IV"
+end step
+
+step "Set Header Actions IV"
+	Set the icon of the new item to the trash can icon.
+action
+	highlight property "itemArray" of section "Basic"
+	wait until the itemIcons of widget "Header" is "plus,trash"
+	go to step "Set Header Actions V"
+end step
+
+step "Set Header Actions V"
+	Set the name of the new item to "delete".
+action
+	highlight property "itemNames" of section "Basic"
+	wait until the itemNames of widget "Header" is "add,delete"
+	go to step "Set Header Left Action"
+end step
+
+step "Set Header Left Action"
+	Uncheck the 'First Action On Left' checkbox.
+action
+	highlight property "firstItemLeft" of section "Basic"
+	wait until the firstItemLeft of widget "Header" is false
+	go to step "Create task list"
+end step
+
+skip point
+
+step "Create task list"
+	Next we want to add a list field. This will be used to display the tasks in the To Do list.
+action
+	highlight tool "Create list field"
+	capture the next new field of stack "Mainstack" as "TaskList"
+	wait until there is a field "TaskList"
+	go to step "Set task list Location"
+end step
+
+step "Set task list Location"
+	Position the field, as shown.
+action
+	add guide "taskListLoc" with rect "0,64,320,568" to stack "Mainstack"
+	highlight guide "taskListLoc"
+	wait until field "taskList" fits guide "taskListLoc" with tolerance 5
+	go to step "Task List PI"
+end step
+
+step "Task List PI"
+	Click on the toolbar icon to open the property inspector for the
+	menu.
+action
+	highlight toolbar "Inspector"
+	wait until there is an inspector for field "taskList"
+	go to step "Set task list name"
+end step
+
+step "Set task list name"
+	Set the name of the menu to "TaskList".
+action
+	highlight property "name" of section "Basic"
+	wait until the name of field "taskList" is "TaskList"
+	go to step "Set task list contents"
+end step
+
+step "Set task list contents"
+	We want the task list to start off empty. Clear the default contents from the list field.
+action
+	highlight property "styledText" of section "contents"
+	wait until the text of field "taskList" is empty
+	go to step "Events and messages interlude"
+end step
+
+skip point
+
+step "Events and messages interlude"
+	Next we add code to the stack to allow the user to interact with it.
+
+	LiveCode apps work by executing code in response to 'messages',
+	which are usually triggered by some kind of user action.
+
+	When an object is sent a message, it will execute the code in the
+	appropriate block of code, or 'handler'.
+action
+	interlude
+	go to step "Open Header Script"
+end step
+
+step "Open Header Script"
+	Select the header bar then click the Code button in the Toolbar.
+action
+	highlight toolbar "Code"
+	wait until there is a script editor for widget "header"
+	go to step "Script Editor Interlude"
+end step
+
+step "Script Editor Interlude"
+	The Script Editor is a window that allows you to add code to the
+	objects on your stack.
+
+	Some objects have a default script associated with then when you first open the Script Editor.
+action
+	interlude
+	highlight script editor for widget "Header"
+	go to step "Script Editor Apply"
+end step
+
+step "Script Editor Apply"
+	The script entered into the script editor does not become live
+	until you click on the 'Apply' button. When this is clicked, you will
+	get feedback about whether the script you have written has any
+	errors in it or not.
+action
+	interlude
+	highlight "Apply" of script editor for widget "header"
+	go to step "mouseUp message"
+end step
+
+skip point
+
+step "mouseUp message"
+	The message we will respond to is 'mouseUp'. This message is sent when the user clicks on the header bar. We use the 'mouseAction' property to check which action was clicked on.
+
+	Firstly we will add code to add a new task to the list. When the user clicks the "add" action the app asks the user to enter a task and adds it to the bottom of the list.
+
+	Add this handler to the script of the header bar.
+script
+	on mouseUp
+		local tActionName, tLineNumber
+ 		put the mouseAction of me into tActionName
+
+ 		if tActionName is "add" then
+			ask "Please enter a task"
+			put it & return after field "taskList"
+ 		end if
+	end mouseUp
+action
+	highlight script editor for widget "header"
+	wait until widget "header" is scripted
+	go to step "Explain ask"
+end step
+
+step "Explain ask"
+	The ask command displays a dialog box with a prompt, a text box for the user to enter a response, and OK and Cancel buttons.
+
+	Use the ask command when you need to get information from the user before continuing.
+action
+	interlude
+	highlight line "ask" of script editor for widget "header"
+	go to step "Delete action script"
+end step
+
+step "Delete action script"
+	Next we will add code to allow the user to delete an item. The 'delete' action will delete the highlighted line from the list of tasks.
+
+	- Check if the 'delete' action has been clicked in the header bar
+
+	- Confirm the deletion with the user
+
+	- Find the line number of the highlighted line
+
+	- Delete the highlighted line from the "taskList" field
+script
+	on mouseUp
+		local tActionName, tLineNumber
+		put the mouseAction of me into tActionName
+
+		if tActionName is "add" then
+			ask "Please enter a task"
+			put it & return after field "taskList"
+		else if tActionName is "delete" then
+			answer "Are you sure you want to delete this item?" with "OK" and "Cancel"
+			if it is "OK" then
+				put the hilitedLine of field "taskList" into tLineNumber
+				delete line tLineNumber of field "taskList"
+			end if
+		end if
+	end mouseUp
+action
+	highlight script editor for widget "header"
+	wait until widget "header" is scripted
+	go to step "Edit Tool Interlude"
+end step
+
+skip point
+
+step "Edit Tool Interlude"
+	LiveCode has two modes: edit mode and run mode.
+
+	Up until now you have been in edit mode all the time. In edit mode
+	you can click or drag to select objects on your stack, and move and
+	resize them.
+
+	You can enter edit mode by clicking this tool in the tools palette.
+action
+	interlude
+	highlight tool "Edit Mode"
+	go to step "Run Tool Interlude"
+end step
+
+step "Run Tool Interlude"
+	In run mode your app is live - objects will behave as they would for
+	the app user. For example, clicking on the add button will allow you to add a task to the list.
+
+	To test the code you have just added, we are going to enter
+	run mode and test adding an item.
+action
+		interlude
+    highlight tool "Run Mode"
+	  go to step "Test Task List"
+end step
+
+step "Test Task List"
+	Select 'Run mode' in the Tools Palette.
+action
+    highlight tool "Run Mode"
+    wait until the tool is run
+	  go to step "Add task"
+end step
+
+step "Add task"
+	Click the 'Add' action in the header bar and enter 'Buy milk' as a task, it will appear at the bottom of the list.
+action
+	highlight widget "header"
+	wait until the text of field "taskList" is "Buy milk"
+	go to step "Return to Edit Mode"
+end step
+
+skip point
+
+step "Return to Edit Mode"
+	Change back to edit mode to continue making changes to the app.
+action
+	highlight tool "Edit Mode"
+	wait until the tool is edit
+	go to step "Saving Data Interlude"
+end step
+
+step "Saving Data Interlude"
+	Once you have built your app into a standalone it can't be changed, so any data that should persist between uses of the app has to be saved outside the app itself.
+
+	We want the tasks we add to be saved when we close the app so we need to save the task list when the app is closed and read it in when the app is opened.
+action
+	interlude
+	go to step "preOpenStack message"
+end step
+
+step "preOpenStack message"
+	When a stack is opened it receives a 'PreOpenStack' message. Any set up can
+	be done in this handler, before the stack becomes visible to the user.
+
+	Click on the Object menu, and select 'Stack Script'.
+action
+	highlight menu item "Stack Script" of menu "Object"
+	wait until there is a script editor for stack "Mainstack"
+	go to step "preOpenStack code"
+end step
+
+step "preOpenStack code"
+	When the stack is opened we will load in the saved tasks. The list of tasks is saved in a text file in the 'Documents' folder. There is a 'Documents' folder on all platforms so this code will work on desktop and mobile.
+
+	We get the contents of the file and place the list into the 'taskList' field.
+script
+	on preOpenStack
+		local tFile
+		put specialFolderPath("documents") & "/ToDoList.txt" into tFile
+		put url ("file:" & tFile) into field "taskList"
+	end preOpenStack
+action
+	highlight script editor for stack "Mainstack"
+	wait until stack "Mainstack" is scripted
+	go to step "closeStack message"
+end step
+
+step "closeStack message"
+	When a stack is closed it receives a 'CloseStack' message. Any clean up can
+	be done in this handler.
+
+	In this app we will save the list of tasks before the app is closed. The contents of the 'TaskList' field and saved to the text file in the 'Documents' folder.
+script
+	on preOpenStack
+		local tFile
+		put specialFolderPath("documents") & "/ToDoList.txt" into tFile
+		put url ("file:" & tFile) into field "TaskList"
+	end preOpenStack
+
+	on closeStack
+		local tFile
+		put specialFolderPath("documents") & "/ToDoList.txt" into tFile
+		put field "TaskList" into url ("file:" & tFile)
+	end closeStack
+action
+	highlight script editor for stack "Mainstack"
+	wait until stack "Mainstack" is scripted
+end step
+
+epilogue
+	That's it, you have finished your app. Switch back to 'Run' mode and try it out.
+
+	Why don't you try customising it by changing some properties such as the Header widget colours or stack font and text size.
+image
+		ToDoListScreenshot2.png
+end epilogue
