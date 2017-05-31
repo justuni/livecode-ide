@@ -931,8 +931,9 @@ private command revInternal__EnsureFolder pFolder
   local tPath, tComponent
   
   set the itemDelimiter to "/"
-  repeat for each item tComponent in pFolder
+  repeat for each item tComponent in pFolde
     put tComponent & "/" after tPath
+    if tComponent is empty then next repeat
     if there is no folder (char 1 to -2 of tPath) then
       create folder char 1 to -2 of tPath
       if the result is empty then
